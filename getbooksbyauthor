@@ -1,0 +1,9 @@
+Command:
+curl.exe -i "http://localhost:5000/author/Jane%20Austen"
+
+Output:
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+
+[{"isbn":"9780141439518","author":"Jane Austen","title":"Pride and Prejudice","reviews":{}}]

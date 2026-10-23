@@ -1,0 +1,12 @@
+Command:
+curl.exe -L "https://api.github.com/repos/sakshipatil241-rgb/expressBookReviews"
+
+Output:
+{
+  "name": "expressBookReviews",
+  "full_name": "sakshipatil241-rgb/expressBookReviews",
+  "fork": true,
+  "parent": {
+    "full_name": "ibm-developer-skills-network/expressBookReviews"
+  }
+}

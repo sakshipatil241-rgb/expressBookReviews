@@ -1,0 +1,9 @@
+Command:
+curl.exe -i "http://localhost:5000/review/9780141439518"
+
+Output:
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+
+{"isbn":"9780141439518","reviews":{}}
