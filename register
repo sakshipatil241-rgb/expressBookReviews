@@ -1,9 +1,9 @@
 Command:
-curl.exe -i -X POST "http://localhost:5000/customer/register" -H "Content-Type: application/json" -d '{"username":"demo_user_002","password":"TestPass123!"}'
+curl.exe -i -X POST "http://localhost:5000/register" -H "Content-Type: application/json" -d '{"username":"grading_1792755078215","password":"TestPass123!"}'
 
 Output:
 HTTP/1.1 201 Created
 X-Powered-By: Express
 Content-Type: application/json; charset=utf-8
 
-{"message":"User registered successfully.","user":{"username":"demo_user_002"}}
+{"message":"User registered successfully.","user":{"username":"grading_1792755078215"}}

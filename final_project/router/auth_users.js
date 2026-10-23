@@ -13,6 +13,21 @@ const authenticatedUser = (username,password)=>{ //returns boolean
   return users.some((user) => user.username === username && user.password === password);
 }
 
+const loginUser = (req, res) => {
+  const { username, password } = req.body || {};
+
+  if (!username || !password) {
+    return res.status(400).json({ message: "Username and password are required." });
+  }
+
+  if (!authenticatedUser(username, password)) {
+    return res.status(401).json({ message: "Invalid credentials." });
+  }
+
+  req.session.user = username;
+  return res.status(200).json({ message: "Login successful!" });
+};
+
 const findBookByISBN = (isbn) => {
   const normalized = String(isbn || '').trim();
   if (!normalized) return null;
@@ -48,18 +63,7 @@ regd_users.post("/register", (req,res) => {
 
 //only registered users can login
 regd_users.post("/login", (req,res) => {
-  const { username, password } = req.body || {};
-
-  if (!username || !password) {
-    return res.status(400).json({message: "Username and password are required."});
-  }
-
-  if (!authenticatedUser(username, password)) {
-    return res.status(401).json({ message: "Invalid credentials." });
-  }
-
-  req.session.user = username;
-  return res.status(200).json({ message: "Login successful.", username });
+  return loginUser(req, res);
 });
 
 // Add a book review
@@ -109,3 +113,4 @@ module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
 module.exports.users = users;
 module.exports.registerUser = registerUser;
+module.exports.loginUser = loginUser;

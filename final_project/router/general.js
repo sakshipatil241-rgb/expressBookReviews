@@ -1,7 +1,38 @@
 const express = require('express');
+const axios = require('axios');
 let books = require("./booksdb.js");
-let { registerUser } = require("./auth_users.js");
+let { registerUser, loginUser } = require("./auth_users.js");
 const public_users = express.Router();
+const booksApiBaseUrl = (process.env.BOOKS_API_URL || 'http://localhost:5000').replace(/\/$/, '');
+
+const requestBookApi = async (url) => {
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const status = error.response ? error.response.status : 'network error';
+      throw new Error(`Book API request failed (${status}).`, { cause: error });
+    }
+    throw error;
+  }
+};
+
+const getAllBooks = async () => {
+  return requestBookApi(`${booksApiBaseUrl}/`);
+};
+
+const getBooksByISBN = async (isbn) => {
+  return requestBookApi(`${booksApiBaseUrl}/isbn/${encodeURIComponent(isbn)}`);
+};
+
+const getBooksByAuthor = async (author) => {
+  return requestBookApi(`${booksApiBaseUrl}/author/${encodeURIComponent(author)}`);
+};
+
+const getBooksByTitle = async (title) => {
+  return requestBookApi(`${booksApiBaseUrl}/title/${encodeURIComponent(title)}`);
+};
 
 const findBookByISBN = (isbn) => {
   const normalized = String(isbn || '').trim();
@@ -18,6 +49,8 @@ public_users.post("/register", (req,res) => {
   const result = registerUser(username, password);
   return res.status(result.status).json({ message: result.message, user: result.user });
 });
+
+public_users.post("/login", (req, res) => loginUser(req, res));
 
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
@@ -71,3 +104,7 @@ public_users.get('/review/:isbn',function (req, res) {
 });
 
 module.exports.general = public_users;
+module.exports.getAllBooks = getAllBooks;
+module.exports.getBooksByISBN = getBooksByISBN;
+module.exports.getBooksByAuthor = getBooksByAuthor;
+module.exports.getBooksByTitle = getBooksByTitle;

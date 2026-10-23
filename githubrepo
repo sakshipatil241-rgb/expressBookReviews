@@ -3,10 +3,14 @@ curl.exe -L "https://api.github.com/repos/sakshipatil241-rgb/expressBookReviews"
 
 Output:
 {
+  "html_url": "https://github.com/sakshipatil241-rgb/expressBookReviews",
   "name": "expressBookReviews",
   "full_name": "sakshipatil241-rgb/expressBookReviews",
   "fork": true,
   "parent": {
-    "full_name": "ibm-developer-skills-network/expressBookReviews"
+    "full_name": "ibm-developer-skills-network/expressBookReviews",
+    "html_url": "https://github.com/ibm-developer-skills-network/expressBookReviews"
   }
 }
+
+The API confirms that this repository is forked from ibm-developer-skills-network/expressBookReviews.
